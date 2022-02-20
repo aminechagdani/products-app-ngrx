@@ -1,0 +1,17 @@
+<div class="p-4">
+  <app-product-nav-bar></app-product-nav-bar>
+  <ng-container *ngIf="productsState$ | async as state" [ngSwitch]="state.dataState">
+    <ng-container *ngSwitchCase="productsStateEnum.INITIAL">
+      <div class="p-2">Initial state</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="productsStateEnum.LOADING">
+      <div class="p-2">Loading...</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="productsStateEnum.ERROR">
+      <div class="p-2 text-danger">{{state.errorMessage | json}}</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="productsStateEnum.LOADED" class="p-4">
+      <app-products-list [state]="state"></app-products-list>
+    </ng-container>
+  </ng-container>
+</div>

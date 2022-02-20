@@ -1,0 +1,49 @@
+<div class="container">
+  <ng-container *ngIf="state">
+    <ng-container *ngIf="state.dataState==productStateEnum.LOADING">
+      Loading...
+    </ng-container>
+    <ng-container *ngIf="state.dataState==productStateEnum.ERROR">
+      {{state.errorMessage}}
+    </ng-container>
+    <ng-container *ngIf="state.dataState==productStateEnum.UPDATED">
+      <div class="alert-success container p-3 m-3">
+        <span>Product Updated Successfully</span>
+        <button class="btn btn-success ml-3" (click)="okUpdated()">OK</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="state.dataState==productStateEnum.LOADED">
+      <ng-container *ngIf="formBuilt && productFormGroup">
+        <form [formGroup]="productFormGroup" (ngSubmit)="onUpdateProduct()">
+          <div class="form-group">
+            <label for="name">ID : </label>
+            <label>{{productFormGroup.controls['id'].value}}</label>
+            <input type="hidden" formControlName="id" id="id">
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" formControlName="name" id="name"
+                  [ngClass]="{'is-invalid':submitted && productFormGroup.controls?.['name']?.errors}">
+            <div *ngIf="submitted && productFormGroup.controls?.['name']?.errors" class="invalid-feedback">
+              <div *ngIf="productFormGroup.controls?.['name']?.errors">Name is Required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="price">Price </label>
+            <input type="text" class="form-control" formControlName="price" id="price">
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity </label>
+            <input type="text" class="form-control" formControlName="quantity" id="quantity">
+          </div>
+          <div class="form-group">
+            <label for="selected">Selected </label>
+            <input type="checkbox" class="form-check" formControlName="selected" id="selected">
+          </div>
+          <button type="submit" class="btn btn-success" >Save</button>
+
+        </form>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>
